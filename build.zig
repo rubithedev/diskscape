@@ -10,6 +10,9 @@ pub fn build(b: *std.Build) void {
             .target = target,
             .optimize = optimize,
         }),
+
+        // TODO: Remove in the next GCC update.
+        .use_llvm = true,
     });
 
     b.installArtifact(exe);
