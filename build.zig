@@ -3,6 +3,12 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    const raylib = b.dependency("raylib", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
     const exe = b.addExecutable(.{
         .name = "diskscape",
         .root_module = b.createModule(.{
@@ -14,6 +20,8 @@ pub fn build(b: *std.Build) void {
         // TODO: Remove in the next GCC update.
         .use_llvm = true,
     });
+
+    exe.root_module.addImport("raylib", raylib.module("raylib"));
 
     b.installArtifact(exe);
 
