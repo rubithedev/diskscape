@@ -2,3 +2,6 @@
 zig-out/
 zig-pkg/
 *.o
+
+# Testing Exploration File
+fs.iso
