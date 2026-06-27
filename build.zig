@@ -16,22 +16,22 @@ pub fn build(b: *std.Build) void {
             .target = target,
             .optimize = optimize,
         }),
-
-        // TODO: Remove in the next GCC update.
-        .use_llvm = true,
     });
 
     exe.root_module.addImport("raylib", raylib.module("raylib"));
+    exe.root_module.linkLibrary(raylib.artifact("raylib"));
+
+    exe.root_module.linkSystemLibrary("GL", .{});
+    exe.root_module.linkSystemLibrary("X11", .{});
+    exe.root_module.linkSystemLibrary("Xrandr", .{});
+    exe.root_module.linkSystemLibrary("Xinerama", .{});
+    exe.root_module.linkSystemLibrary("Xi", .{});
+    exe.root_module.linkSystemLibrary("Xcursor", .{});
 
     b.installArtifact(exe);
 
-    // This one is the debug run command.
     const run_cmd = b.addRunArtifact(exe);
-
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
-
+    if (b.args) |args| run_cmd.addArgs(args);
     const run_step = b.step("run", "Runs the debug application");
     run_step.dependOn(&run_cmd.step);
 }
