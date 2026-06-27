@@ -2,7 +2,7 @@ const std = @import("std");
 const id = @import("utils/uuid.zig");
 const UUID = id.UUID;
 
-const Transform = struct {
+pub const Transform = struct {
     x: f32,
     y: f32,
 
@@ -23,7 +23,7 @@ const Transform = struct {
     // TODO: The rest of the translation functions.
 };
 
-const Entity = struct {
+pub const Entity = struct {
     id: UUID,
     tf: Transform,
 
