@@ -1,6 +1,6 @@
 .{
     .name = .diskscape,
-    .version = "0.16.0",
+    .version = "0.17.0-dev.292+fc1c83a36",
     .dependencies = .{
         .raylib = .{
             .url = "https://github.com/raysan5/raylib/archive/refs/tags/6.0.tar.gz",
@@ -8,5 +8,5 @@
         },
     },
     .paths = .{""},
-    .fingerprint = 0x5b82c57d6970462a,
+    .fingerprint = 0x5b82c57d61650d53,
 }

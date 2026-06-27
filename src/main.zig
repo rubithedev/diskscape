@@ -1,25 +1,12 @@
 const std = @import("std");
-const rl = @import("raylib");
+const EngineIo = @import("engine_io.zig").EngineIO;
+
+const print = std.debug.print;
 
 pub fn main(init: std.process.Init) !void {
-    try std.Io.File.stdout().writeStreamingAll(init.io, "Hello World!\n");
+    const engine_io = try EngineIo.init(init.io, "fs.iso");
+    defer engine_io.deinit();
 
-    rl.InitWindow(800, 600, "Triangle");
-    defer rl.CloseWindow();
-
-    rl.SetTargetFPS(60);
-
-    while (!rl.WindowShouldClose()) {
-        rl.BeginDrawing();
-        defer rl.EndDrawing();
-
-        rl.ClearBackground(rl.RAYWHITE);
-
-        rl.DrawTriangle(
-            .{ .x = 400, .y = 150 },
-            .{ .x = 250, .y = 450 },
-            .{ .x = 550, .y = 450 },
-            rl.RED,
-        );
-    }
+    const chunk = try engine_io.loadChunk(1, 1);
+    for (chunk) |byte| if (byte != 0) print("\nByte: 0x{X}\n", .{byte}) else print(".", .{});
 }
