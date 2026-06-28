@@ -18,15 +18,17 @@ pub const EngineIO = struct {
         };
     }
 
-    pub fn deinit(self: EngineIO) void {
+    pub fn deinit(self: *EngineIO) void {
         self.file.close(self.io);
+
+        self.* = undefined;
     }
 
-    fn getFileSize(self: EngineIO) !u64 {
+    fn getFileSize(self: *const EngineIO) !u64 {
         return (try self.file.stat(self.io)).size;
     }
 
-    pub fn loadChunk(self: EngineIO, x: u64, y: u64) ![4096]u8 {
+    pub fn loadChunk(self: *const EngineIO, x: u64, y: u64) ![4096]u8 {
         var chunk: [4096]u8 = undefined;
         var reader = self.file.reader(self.io, &chunk);
 
